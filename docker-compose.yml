@@ -5,13 +5,5 @@ services:
     container_name: brag-sheet-api
     build:
       context: .
-      dockerfile: Dockerfile.api
     ports:
       - '8081:8081'
-  brag-sheet-frontend:
-    container_name: brag-sheet-frontend
-    build:
-      context: .
-      dockerfile: Dockerfile.frontend
-    ports:
-      - '8080:8080'
