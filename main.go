@@ -41,6 +41,8 @@ func init() {
 	envflag.IntVar(&port, "PORT", 0, "port the db is running on")
 	envflag.StringVar(&database, "DATABASE", "", "default database")
 	envflag.StringVar(&sslmode, "SSLMODE", "", "ssl mode")
+
+	fmt.Println("password:", password)
 }
 
 func main() {
