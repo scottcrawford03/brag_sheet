@@ -7,3 +7,21 @@ services:
       context: .
     ports:
       - '8080:8080'
+    environment:
+      HOST: bragdb
+      USERNAME: doadmin
+      PASSWORD: sekret
+      PORT:     5432
+      DATABASE: defaultdb
+      SSLMODE:  disable
+    depends_on:
+      - bragdb
+  bragdb:
+    container_name: bragdb
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: sekret
+      POSTGRES_USER: doadmin
+      POSTGRES_DB: defaultdb
+
