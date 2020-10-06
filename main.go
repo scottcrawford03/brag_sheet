@@ -41,7 +41,7 @@ func init() {
 	envflag.StringVar(&username, "USERNAME", "root", "database user")
 	envflag.StringVar(&password, "PASSWORD", "sekret", "password for db user")
 	envflag.StringVar(&host, "HOST", "localhost", "host where db is running")
-	envflag.IntVar(&port, "PORT", 5432, "port the db is running on")
+	envflag.IntVar(&port, "DB_PORT", 5432, "port the db is running on")
 	envflag.StringVar(&database, "DATABASE", "bragsheet", "default database")
 	envflag.StringVar(&sslmode, "SSLMODE", "disable", "ssl mode")
 }
