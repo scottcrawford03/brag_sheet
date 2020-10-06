@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -12,10 +13,12 @@ import (
 	_ "github.com/lib/pq"
 )
 
+// AllBragsResponse is the response with all the brags
 type AllBragsResponse struct {
 	Brags []Brag `json:"brags"`
 }
 
+// Brag represents a brag model
 type Brag struct {
 	Message string `json:"brag"`
 }
@@ -51,20 +54,20 @@ func main() {
 		host, port, username, password, database, sslmode)
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		panic(err)
+		log.Fatalf("pinging db: %v", err)
 	}
 	defer db.Close()
 
 	err = db.Ping()
 	if err != nil {
-		panic(err)
+		log.Fatalf("pinging db: %v", err)
 	}
 
 	fmt.Println("Successfully connected!")
 	fmt.Println("new router")
 	r := mux.NewRouter()
 
-	fmt.Println("handler")
+	log.Println("creating handler funcs")
 	r.HandleFunc("/", GetAllBrags(db)).Methods("GET")
 	r.HandleFunc("/brag", CreateBrag(db)).Methods("POST")
 
@@ -72,6 +75,7 @@ func main() {
 	http.ListenAndServe(":8080", r)
 }
 
+// GetAllBrags fetches all brags
 func GetAllBrags(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, request *http.Request) {
 		fmt.Println("Request to get brags")
@@ -101,6 +105,7 @@ func GetAllBrags(db *sql.DB) http.HandlerFunc {
 	}
 }
 
+// CreateBrag creates a brag
 func CreateBrag(db *sql.DB) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("Request to create brags")
